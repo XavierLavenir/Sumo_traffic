@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 4/10/2016 3:07:18 PM by SUMO gui Version 0.24.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumo-gui.exeConfiguration.xsd">
+
+    <input>
+        <net-file value="C:\Users\Xavier\Dropbox\Courses\Fall\ME%20199%20-%20Final%20Year%20Project\Sumo%20Projects\Simple%20Intersection2\intersection2Test.net.xml"/>
+        <route-files value="C:\Users\Xavier\Dropbox\Courses\Fall\ME%20199%20-%20Final%20Year%20Project\Sumo%20Projects\Simple%20Intersection2\intersection2Test4.rou.xml"/>
+    </input>
+
+    <output>
+        <tripinfo-output value="tripinfo.xml"/>
+        <save-state.prefix value="C:\Users\Xavier\Dropbox\Courses\Fall\ME%20199%20-%20Final%20Year%20Project\Sumo%20Projects\Simple%20Intersection2\state"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+        <end value="10000"/>
+    </time>
+
+    <processing>
+        <time-to-teleport value="-1"/>
+    </processing>
+
+    <emissions>
+        <phemlight-path value="C:\Users\Xavier\Dropbox\Courses\Fall\ME%20199%20-%20Final%20Year%20Project\Sumo%20Projects\Simple%20Intersection2\./PHEMlight/"/>
+    </emissions>
+
+    <traci_server>
+        <remote-port value="8873"/>
+    </traci_server>
+
+</configuration>

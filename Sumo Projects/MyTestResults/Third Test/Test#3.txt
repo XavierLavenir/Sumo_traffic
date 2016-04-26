@@ -1,0 +1,6 @@
+This is test to investigate why vehicles go on the wrong lanes when spawning and impede traffic flow.
+The map was adjusted to increase the length of spawning edges.
+100% Connected vehicles 
+CONST_TAU_UNCONNECTED = 2.6
+CONST_TAU_CONNECTED = 1.1
+TotalTime:see tripInfo.xml

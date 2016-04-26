@@ -1,0 +1,5 @@
+THis is my first sumo test that succeeded.
+100% Connected vehicles 
+CONST_TAU_UNCONNECTED = 2.6
+CONST_TAU_CONNECTED = 1.1
+TotalTime:1548

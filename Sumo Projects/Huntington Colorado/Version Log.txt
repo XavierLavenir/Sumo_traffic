@@ -3,4 +3,9 @@ Version 2:
 Version 3:
 -Build first draft of the entire network
 Version 4:
--Removed an edge
+-Removed an edge-->because signal timing didn't include this edge(?) check
+Version 5:
+-made spawn edges slightly longer to cope with queues.
+-Modified the connections because of the edge removed in Version 4
+Version 6:
+-Modifying the network to increase edges before junctions 
