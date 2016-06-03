@@ -6,11 +6,7 @@
     </input>
     <time>
         <begin value="0"/>
-        <end value="10000"/>
     </time>
 	
-	<output>
-		<summary-file value="mySummary.xml" />
-	</output>
     <time-to-teleport value="-1"/>
 </configuration>

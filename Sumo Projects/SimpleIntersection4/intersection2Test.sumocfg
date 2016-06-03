@@ -2,11 +2,10 @@
 <configuration>
     <input>
         <net-file value="intersection2Test.net.xml"/>
-        <route-files value="intersection2Test4.rou.xml"/>
+        <route-files value="intersection2Test2.rou.xml"/>
     </input>
     <time>
         <begin value="0"/>
-        <end value="10000"/>
     </time>
     <time-to-teleport value="-1"/>
 </configuration>

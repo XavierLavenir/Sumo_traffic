@@ -11,9 +11,9 @@
 	<connection from="16to1" to="1to17" fromLane="1" toLane="1"/>
 	<connection from="16to1" to="1to15" fromLane="2" toLane="1"/>
 	
-	<connection from="15to1" to="1to14" fromLane="0" toLane="0"/>
-	<connection from="15to1" to="1to14" fromLane="1" toLane="1"/>
-	<connection from="15to1" to="1to17" fromLane="2" toLane="1"/>
+	<connection from="15to1" to="1to14" fromLane="1" toLane="0"/>
+	<connection from="15to1" to="1to14" fromLane="2" toLane="1"/>
+	<connection from="15to1" to="1to17" fromLane="3" toLane="1"/>
 	<connection from="15to1" to="1to16" fromLane="0" toLane="0"/>
 	
 	<connection from="17to1" to="1to14" fromLane="3" toLane="1"/>

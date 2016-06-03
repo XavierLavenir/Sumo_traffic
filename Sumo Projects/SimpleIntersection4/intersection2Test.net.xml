@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 04/16/16 15:20:02 by SUMO netconvert Version 0.24.0
+<!-- generated on 05/21/16 17:10:58 by SUMO netconvert Version 0.24.0
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
@@ -30,28 +30,28 @@
     <type id="a" priority="1" numLanes="2" speed="14.00"/>
 
     <edge id=":10_0" function="internal">
-        <lane id=":10_0_0" index="0" speed="14.00" length="0.10" shape="320.00,504.95 320.00,504.95"/>
-        <lane id=":10_0_1" index="1" speed="14.00" length="0.10" shape="320.00,501.65 320.00,501.65"/>
+        <lane id=":10_0_0" index="0" speed="14.00" length="0.10" shape="110.00,504.95 110.00,504.95"/>
+        <lane id=":10_0_1" index="1" speed="14.00" length="0.10" shape="110.00,501.65 110.00,501.65"/>
     </edge>
     <edge id=":10_2" function="internal">
-        <lane id=":10_2_0" index="0" speed="14.00" length="0.10" shape="320.00,495.05 320.00,495.05"/>
-        <lane id=":10_2_1" index="1" speed="14.00" length="0.10" shape="320.00,498.35 320.00,498.35"/>
+        <lane id=":10_2_0" index="0" speed="14.00" length="0.10" shape="110.00,495.05 110.00,495.05"/>
+        <lane id=":10_2_1" index="1" speed="14.00" length="0.10" shape="110.00,498.35 110.00,498.35"/>
     </edge>
     <edge id=":11_0" function="internal">
-        <lane id=":11_0_0" index="0" speed="14.00" length="0.10" shape="330.00,504.95 330.00,504.95"/>
-        <lane id=":11_0_1" index="1" speed="14.00" length="0.10" shape="330.00,501.65 330.00,501.65"/>
+        <lane id=":11_0_0" index="0" speed="14.00" length="0.10" shape="120.00,504.95 120.00,504.95"/>
+        <lane id=":11_0_1" index="1" speed="14.00" length="0.10" shape="120.00,501.65 120.00,501.65"/>
     </edge>
     <edge id=":11_2" function="internal">
-        <lane id=":11_2_0" index="0" speed="14.00" length="0.10" shape="330.00,495.05 330.00,495.05"/>
-        <lane id=":11_2_1" index="1" speed="14.00" length="0.10" shape="330.00,498.35 330.00,498.35"/>
+        <lane id=":11_2_0" index="0" speed="14.00" length="0.10" shape="120.00,495.05 120.00,495.05"/>
+        <lane id=":11_2_1" index="1" speed="14.00" length="0.10" shape="120.00,498.35 120.00,498.35"/>
     </edge>
     <edge id=":12_0" function="internal">
-        <lane id=":12_0_0" index="0" speed="14.00" length="0.10" shape="340.00,504.95 340.00,504.95"/>
-        <lane id=":12_0_1" index="1" speed="14.00" length="0.10" shape="340.00,501.65 340.00,501.65"/>
+        <lane id=":12_0_0" index="0" speed="14.00" length="0.10" shape="130.00,504.95 130.00,504.95"/>
+        <lane id=":12_0_1" index="1" speed="14.00" length="0.10" shape="130.00,501.65 130.00,501.65"/>
     </edge>
     <edge id=":12_2" function="internal">
-        <lane id=":12_2_0" index="0" speed="14.00" length="0.10" shape="340.00,495.05 340.00,495.05"/>
-        <lane id=":12_2_1" index="1" speed="14.00" length="0.10" shape="340.00,498.35 340.00,498.35"/>
+        <lane id=":12_2_0" index="0" speed="14.00" length="0.10" shape="130.00,495.05 130.00,495.05"/>
+        <lane id=":12_2_1" index="1" speed="14.00" length="0.10" shape="130.00,498.35 130.00,498.35"/>
     </edge>
     <edge id=":5_0" function="internal">
         <lane id=":5_0_0" index="0" speed="14.00" length="0.10" shape="100.00,504.95 100.00,504.95"/>
@@ -175,36 +175,36 @@
         <lane id="L8_1" index="1" speed="14.00" length="391.95" shape="508.05,498.35 900.00,498.35"/>
     </edge>
     <edge id="N1b" from="10" to="5" priority="1" type="a">
-        <lane id="N1b_0" index="0" speed="14.00" length="220.00" shape="320.00,504.95 100.00,504.95"/>
-        <lane id="N1b_1" index="1" speed="14.00" length="220.00" shape="320.00,501.65 100.00,501.65"/>
+        <lane id="N1b_0" index="0" speed="14.00" length="10.00" shape="110.00,504.95 100.00,504.95"/>
+        <lane id="N1b_1" index="1" speed="14.00" length="10.00" shape="110.00,501.65 100.00,501.65"/>
     </edge>
     <edge id="N1f" from="5" to="10" priority="1" type="a">
-        <lane id="N1f_0" index="0" speed="14.00" length="220.00" shape="100.00,495.05 320.00,495.05"/>
-        <lane id="N1f_1" index="1" speed="14.00" length="220.00" shape="100.00,498.35 320.00,498.35"/>
+        <lane id="N1f_0" index="0" speed="14.00" length="10.00" shape="100.00,495.05 110.00,495.05"/>
+        <lane id="N1f_1" index="1" speed="14.00" length="10.00" shape="100.00,498.35 110.00,498.35"/>
     </edge>
     <edge id="N2b" from="11" to="10" priority="1" type="a">
-        <lane id="N2b_0" index="0" speed="14.00" length="10.00" shape="330.00,504.95 320.00,504.95"/>
-        <lane id="N2b_1" index="1" speed="14.00" length="10.00" shape="330.00,501.65 320.00,501.65"/>
+        <lane id="N2b_0" index="0" speed="14.00" length="10.00" shape="120.00,504.95 110.00,504.95"/>
+        <lane id="N2b_1" index="1" speed="14.00" length="10.00" shape="120.00,501.65 110.00,501.65"/>
     </edge>
     <edge id="N2f" from="10" to="11" priority="1" type="a">
-        <lane id="N2f_0" index="0" speed="14.00" length="10.00" shape="320.00,495.05 330.00,495.05"/>
-        <lane id="N2f_1" index="1" speed="14.00" length="10.00" shape="320.00,498.35 330.00,498.35"/>
+        <lane id="N2f_0" index="0" speed="14.00" length="10.00" shape="110.00,495.05 120.00,495.05"/>
+        <lane id="N2f_1" index="1" speed="14.00" length="10.00" shape="110.00,498.35 120.00,498.35"/>
     </edge>
     <edge id="N3b" from="12" to="11" priority="1" type="a">
-        <lane id="N3b_0" index="0" speed="14.00" length="10.00" shape="340.00,504.95 330.00,504.95"/>
-        <lane id="N3b_1" index="1" speed="14.00" length="10.00" shape="340.00,501.65 330.00,501.65"/>
+        <lane id="N3b_0" index="0" speed="14.00" length="10.00" shape="130.00,504.95 120.00,504.95"/>
+        <lane id="N3b_1" index="1" speed="14.00" length="10.00" shape="130.00,501.65 120.00,501.65"/>
     </edge>
     <edge id="N3f" from="11" to="12" priority="1" type="a">
-        <lane id="N3f_0" index="0" speed="14.00" length="10.00" shape="330.00,495.05 340.00,495.05"/>
-        <lane id="N3f_1" index="1" speed="14.00" length="10.00" shape="330.00,498.35 340.00,498.35"/>
+        <lane id="N3f_0" index="0" speed="14.00" length="10.00" shape="120.00,495.05 130.00,495.05"/>
+        <lane id="N3f_1" index="1" speed="14.00" length="10.00" shape="120.00,498.35 130.00,498.35"/>
     </edge>
     <edge id="N4b" from="9" to="12" priority="1" type="a">
-        <lane id="N4b_0" index="0" speed="14.00" length="151.95" shape="491.95,504.95 340.00,504.95"/>
-        <lane id="N4b_1" index="1" speed="14.00" length="151.95" shape="491.95,501.65 340.00,501.65"/>
+        <lane id="N4b_0" index="0" speed="14.00" length="361.95" shape="491.95,504.95 130.00,504.95"/>
+        <lane id="N4b_1" index="1" speed="14.00" length="361.95" shape="491.95,501.65 130.00,501.65"/>
     </edge>
     <edge id="N4f" from="12" to="9" priority="1" type="a">
-        <lane id="N4f_0" index="0" speed="14.00" length="151.95" shape="340.00,495.05 491.95,495.05"/>
-        <lane id="N4f_1" index="1" speed="14.00" length="151.95" shape="340.00,498.35 491.95,498.35"/>
+        <lane id="N4f_0" index="0" speed="14.00" length="361.95" shape="130.00,495.05 491.95,495.05"/>
+        <lane id="N4f_1" index="1" speed="14.00" length="361.95" shape="130.00,498.35 491.95,498.35"/>
     </edge>
 
     <tlLogic id="9" type="static" programID="0" offset="0">
@@ -215,19 +215,19 @@
     </tlLogic>
 
     <junction id="1" type="dead_end" x="0.00" y="500.00" incLanes="D1_0 D1_1" intLanes="" shape="-0.00,499.95 -0.00,493.45 0.00,506.55 0.00,500.05"/>
-    <junction id="10" type="priority" x="320.00" y="500.00" incLanes="N2b_0 N2b_1 N1f_0 N1f_1" intLanes=":10_0_0 :10_0_1 :10_2_0 :10_2_1" shape="320.00,506.55 320.00,493.45 320.00,506.55">
+    <junction id="10" type="priority" x="110.00" y="500.00" incLanes="N2b_0 N2b_1 N1f_0 N1f_1" intLanes=":10_0_0 :10_0_1 :10_2_0 :10_2_1" shape="110.00,506.55 110.00,493.45 110.00,506.55">
         <request index="0" response="0000" foes="0000" cont="0"/>
         <request index="1" response="0000" foes="0000" cont="0"/>
         <request index="2" response="0000" foes="0000" cont="0"/>
         <request index="3" response="0000" foes="0000" cont="0"/>
     </junction>
-    <junction id="11" type="priority" x="330.00" y="500.00" incLanes="N3b_0 N3b_1 N2f_0 N2f_1" intLanes=":11_0_0 :11_0_1 :11_2_0 :11_2_1" shape="330.00,506.55 330.00,493.45 330.00,506.55">
+    <junction id="11" type="priority" x="120.00" y="500.00" incLanes="N3b_0 N3b_1 N2f_0 N2f_1" intLanes=":11_0_0 :11_0_1 :11_2_0 :11_2_1" shape="120.00,506.55 120.00,493.45 120.00,506.55">
         <request index="0" response="0000" foes="0000" cont="0"/>
         <request index="1" response="0000" foes="0000" cont="0"/>
         <request index="2" response="0000" foes="0000" cont="0"/>
         <request index="3" response="0000" foes="0000" cont="0"/>
     </junction>
-    <junction id="12" type="priority" x="340.00" y="500.00" incLanes="N4b_0 N4b_1 N3f_0 N3f_1" intLanes=":12_0_0 :12_0_1 :12_2_0 :12_2_1" shape="340.00,506.55 340.00,493.45 340.00,506.55">
+    <junction id="12" type="priority" x="130.00" y="500.00" incLanes="N4b_0 N4b_1 N3f_0 N3f_1" intLanes=":12_0_0 :12_0_1 :12_2_0 :12_2_1" shape="130.00,506.55 130.00,493.45 130.00,506.55">
         <request index="0" response="0000" foes="0000" cont="0"/>
         <request index="1" response="0000" foes="0000" cont="0"/>
         <request index="2" response="0000" foes="0000" cont="0"/>

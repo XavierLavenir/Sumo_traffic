@@ -10,6 +10,8 @@ import os
 import sys
 import constants
 import random
+from pandas import DataFrame
+import shutil
 
 # we need to import python modules from the $SUMO_HOME/tools directory
 try:
@@ -179,12 +181,6 @@ class Platoon:
 	def UpdatePlatoonOrder(self):#Works but may be inneficient
 		#Updates the position of each vehicle within the platoon
 		
-		# myL = self.GetVehicleListID()
-		# if('type4.0' in myL):
-		# 	if('type0.39' in myL):
-		# 		print self.GetID()
-		# 		print self.PrintPlatoon()
-
 		i = 0
 		while i < len(self._vehicleList) - 1:#Loops through all vehicles in platoon
 			rank = self._determineLeadVehicle(self._vehicleList[i],self._vehicleList[i+1])#Compares the two first vehicles
@@ -205,13 +201,6 @@ class Platoon:
 			self._vehicleList[j].SetPosition(j)
 			#print str(self._vehicleList[j].GetID()) + ': ' + str(self._vehicleList[j].GetPosition())
 			j+=1
-
-
-		# myL = self.GetVehicleListID()
-		# if('type4.0' in myL):
-		# 	if('type0.39' in myL):
-		# 		print self.GetID()
-		# 		print self.PrintPlatoon()
 
 	def PrintPlatoon(self):
 
@@ -292,9 +281,11 @@ class Platoon:
 				break
 
 			#default value for the index of the edge with the most vehicles
-			maxI = [-1]
+			maxI = [-1]	
 			m = 0
 			
+			#print myNewList
+
 			#Determines which is the longest list
 			for k in range(0,len(myNewList[0])):
 				if(len(myNewList[k+1])>m):
@@ -321,6 +312,7 @@ class Platoon:
 
 		self.SetBaseRoute(newBaseRoute)#Update base route
 
+
 	def PrintPlatoonVehicleInfo(self):
 		word = ""
 		for i in range(0,len(self._vehicleList)):
@@ -343,11 +335,13 @@ class Platoon:
 			R = traci.vehicle.getRoute(vid)
 			i = traci.vehicle.getRouteIndex(vid)
 			distance = 0
+			buff = False
 
 			if(traci.vehicle.getRoadID(vid) == R[i]):#If the vehicle is on a road and not at a junction
 				distance += traci.lane.getLength(R[i] + "_0") - traci.vehicle.getLanePosition(vid)
 
 			while(i+1 < len(R)):#If it's not on the last edge of the route
+				buff = True
 				nextEdge =R[i+1]
 				if(nextEdge not in self.GetBaseRoute()):
 					break
@@ -357,7 +351,7 @@ class Platoon:
 						break
 					i+=1
 
-			if(distance < constants.CONST_EXIT_PLATOON_BUFFER):
+			if(distance < constants.CONST_EXIT_PLATOON_BUFFER and buff):
 				#Remove the vehicle from the platoon
 				self.Remove(v)
 
@@ -462,7 +456,7 @@ class Platoon:
 		#All of the follower vehicles should just follow the leader vehicle
 		#Ensures all of the vehicles are on the same lane as the one in front
 		#If we have the junction id, can we predict which road it's going to?
-
+		
 		for i in range(1,len(self._vehicleList)):
 			#Road id's
 			vid1 = self._vehicleList[i-1].GetID()
@@ -476,23 +470,44 @@ class Platoon:
 			ind1 = traci.vehicle.getRouteIndex(vid1)
 			ind2 = traci.vehicle.getRouteIndex(vid2)
 	
+
+			# if (vid1 == 'type0.7'):
+			# 	print vid1 + ' ' + str(traci.vehicle.getRoadID(vid1))
+
+			# if (vid1 == 'type0.8'):
+			# 	print vid1 + ' ' + str(traci.vehicle.getRoadID(vid1))
+
+			# if (vid1 == 'type0.9'):
+			# 	print vid1 + ' ' + str(traci.vehicle.getRoadID(vid1))
+
+			# if (vid1 == 'type0.6'):
+			# 	print vid1 + ' ' + str(traci.vehicle.getRoadID(vid1))
+
+			#print self.GetNumberOfLanes(':6_0')
+			#self._vehicleList[i-1].GetID()
+			
 			case = -1
 			if(RJ1 not in self._edgeList and RJ2 not in self._edgeList):#Both at junction
 				case = 0
 			elif(RJ1 not in self._edgeList and RJ2 in self._edgeList):#1 at junction
 				case = 1
 			elif(RJ1 in self._edgeList and RJ2 not in self._edgeList):#2 at junction
-				case = 2
+				case = 2# If the follower is at a junction, make it adjust to the right lane
+				#print 'Name: ' + self._vehicleList[i].GetID() + ', curr edge: ' + RJ2 +', currLaneIndex: ' + str(traci.vehicle.getLaneIndex(self._vehicleList[i].GetID())) + ', Total lanes: ' + str(self.GetNumberOfLanes(RJ2))
+				#myInd = traci.getLaneIndex(self._vehicleList[i].GetID())
+				#An error was being thrown where if a vehicle was at junction between two edges, it would sometime think that the vehicle was at the prior edge
+				#and not at the junction... weird glitch --> I think it is because a bit of the vehicle is still on the edge so i added a condition where it had to be past the edge
+				#if(traci.vehicle.getLanePosition(vid2) > 1.5*traci.vehicle.getLength(vid2)):
+				#	traci.vehicle.changeLane(self._vehicleList[i].GetID(), traci.vehicle.getLaneIndex(self._vehicleList[i-1].GetID()), constants.CONST_LANE_CHANGE_DURATION)
+					#print 'Name: ' + self._vehicleList[i].GetID() + ', curr edge: ' + RJ2 +', currLaneIndex: ' + str(traci.vehicle.getLaneIndex(self._vehicleList[i].GetID())) + ', Total lanes: ' + str(self.GetNumberOfLanes(RJ2))
+
+				#print traci.vehicle.getLaneIndex(self._vehicleList[i].GetID())
 			elif(RJ1 in self._edgeList and RJ2 in self._edgeList):#neither at junction
 				case = 3
 				#2 cases, on same road or not on same road
 				#Gets the lanes that the vehicle is on regardless of the edge
 				L1 = traci.vehicle.getLaneIndex(self._vehicleList[i-1].GetID())
 				L2 = traci.vehicle.getLaneIndex(self._vehicleList[i].GetID())
-
-
-				if(vid1 == 'type0.11' and vid2 == 'type4.0'):
-					print 'type0.11: R:' + RJ1 +', type04.0: R:' + RJ2
 
 				if(RJ1 == RJ2):#On the same edge
 					if(L1 != L2):#May need to add an update here so that if the leader is on a different lane, then it leaves the platoon
@@ -546,12 +561,18 @@ class Platoon:
 										break
 
 								j1+=1
-						else:
-							print 'VEHICLE IS TOO FAR TO CHECK IF LANES CONNECT'
-							print vid1 +' and ' + vid2
+						#else:
+							#print 'VEHICLE IS TOO FAR TO CHECK IF LANES CONNECT'
+							#print vid1 +' and ' + vid2
 
 					if(connected):
 						traci.vehicle.changeLane(self._vehicleList[i].GetID(), locLaneList[j1], constants.CONST_LANE_CHANGE_DURATION)
+					else:
+						print 'NOT CONNECTED FOR ONCE -- CHECK IT OUT'
+			# if (vid2 == 'type0.8'):
+			# 	print vid2 + ' ' + str(traci.vehicle.getRoadID(vid1)) + ' - case:' + str(case)
+			# 	if(case == 2):
+			# 		traci.vehicle.changeLane(self._vehicleList[i].GetID(), traci.vehicle.getLaneIndex(self._vehicleList[i-1].GetID()), constants.CONST_LANE_CHANGE_DURATION)
 
 	def ShouldVehicleJoin(self, vehID):
 		#This checks if the vehicle should join the platoon
@@ -625,7 +646,7 @@ class Platoon:
 			vehAhead = traci.vehicle.getLeader(vid2)
 			if(vehAhead != None):#checks vehicle directly in front
 				if(vehAhead[0] not in self.GetVehicleListID()):
-					print 'Breaking up platoon: ' + vid1 + ', ' + vid2
+					#print 'Breaking up platoon: ' + vid1 + ', ' + vid2
 					
 					while(i<len(self._vehicleList)):#Keeps the first i vehicles
 						self.Remove(self._vehicleList[i])
@@ -655,8 +676,8 @@ class PlatoonManager:
 			return None
 
 	#Constructor
-	def __init__(self):
-		print 'Platoon Manager is initialised'
+	# def __init__(self):
+	# 	print 'Platoon Manager is initialised'
 
 	def AddPlatoon(self, listOfVehicles):
 
@@ -725,30 +746,20 @@ class PlatoonManager:
 
 		newListofVeh = None
 
-class VehicleManager:
-	#The purpose of this class is to manage all of the vehicles in the system
+class ProgramManager:
+	#The purpose of this class is to manage the entire system
 
-	#Class variables, default values
-	_vehicleList = [] #This is a list of Type 'MyVehicle'
-	platoonManager = PlatoonManager() #Manages the platoons
-	_laneList = []
+	#class variables
+	vehicleManager = None #Manages the vehicles
 	_baseFile = ''
 	_cfgFile = ''
 	_junctionDictionary = {}
 	_intersectionFlow = {}
 	_oldIntersectionFlowVehIds = {}
 	_simulationTimestep = 0
+	_configFile = ""
 
 	#Properties
-	def GetVehicleList(self):
-		return self._vehicleList
-
-	def GetVehicleListIDs(self):
-		theList = []
-		for k in range(0,len(self._vehicleList)):
-			theList.append(self._vehicleList[k].GetID())
-		return theList
-
 	def GetCFGFile(self):
 		return self._cfgFile
 
@@ -764,18 +775,42 @@ class VehicleManager:
 	def SetSimulationTimestep(self, timeStep):
 		self._simulationTimestep = timeStep
 
+
 	#Constructor
-	def __init__(self, basePath, nameOfCFGFile):
+	def __init__(self, basePath, nameOfCFGFile, configFile):
 		#Gets a list of all of the lanes in the network
-		self._laneList = traci.lane.getIDList()
+		constants.UpdateParameters(configFile)
+		self._configFile = configFile
 		self._baseFile = basePath
 		self._cfgFile = nameOfCFGFile
 		self.UpdateJunctionList()
-		self._intersectionFlow[str(constants.CONST_MEASUREMENT_INTERVAL)] = []
-		self._oldIntersectionFlowVehIds[str(constants.CONST_MEASUREMENT_INTERVAL)] = []
 		self.InitialiseOldIntersectionFlow()
 
-	#Methods
+		#Initialise the vehicle manager
+		self.vehicleManager = VehicleManager(basePath, nameOfCFGFile)
+
+
+	def Update(self, timeStep):
+		#Gets a list of all of the vehicles in the network
+		listOfVehicles = traci.vehicle.getIDList()
+
+		#Adds the vehicles to the list
+		self.vehicleManager.UpdateListActiveVehicles(listOfVehicles)
+		if(constants.CONST_ENABLE_PLATOONING):
+			self.vehicleManager.Update(timeStep)
+		self.SetSimulationTimestep(timeStep)
+		#self.UpdateFlowRateCounters()
+
+	def InitialiseOldIntersectionFlow(self):
+		#Loops through all junction to measure
+		for j in range(0,len(constants.CONST_JUNCTIONS_TO_MEASURE)):
+			self._intersectionFlow[constants.CONST_JUNCTIONS_TO_MEASURE[j]] = []
+			self._oldIntersectionFlowVehIds[constants.CONST_JUNCTIONS_TO_MEASURE[j]] = []
+			edgeList = self._junctionDictionary[constants.CONST_JUNCTIONS_TO_MEASURE[j]]#Retrieves the edges connected to the junction
+
+			for i in range(0,len(edgeList)):
+				self._oldIntersectionFlowVehIds[constants.CONST_JUNCTIONS_TO_MEASURE[j]].append([])
+
 	def UpdateJunctionList(self):
 		#reads the xml .net file and gets the list of edges connectd to each junction
 		tree = ET.parse(self.GetBaseFile() + self.GetCFGFile())
@@ -812,6 +847,98 @@ class VehicleManager:
 
 		self._junctionDictionary = myJunctionDic
 
+	def UpdateFlowRateCounters(self):
+		#Updates the number of vehicles going through
+
+		#Determines which index should the counter be stored in
+		index = int(math.floor(self.GetSimulationTimestep()/constants.CONST_MEASUREMENT_INTERVAL))
+		for j in range(0,len(constants.CONST_JUNCTIONS_TO_MEASURE)):
+			edgeList = self._junctionDictionary[str(constants.CONST_JUNCTIONS_TO_MEASURE[j])]#Retrieves the edges connected to the junction
+
+			#Loop through all of the edges
+			for i in range(0,len(edgeList)):
+				counter = 0
+				newVehIds = traci.edge.getLastStepVehicleIDs(edgeList[i])
+				
+
+				for oldVeh in self._oldIntersectionFlowVehIds[str(constants.CONST_JUNCTIONS_TO_MEASURE[j])][i]:
+					#print 
+					if oldVeh not in newVehIds and oldVeh != '':
+						counter +=1
+
+				if(index < len(self._intersectionFlow[str(constants.CONST_JUNCTIONS_TO_MEASURE[j])])):
+					self._intersectionFlow[str(constants.CONST_JUNCTIONS_TO_MEASURE[j])][index] += counter
+				else:
+					self._intersectionFlow[str(constants.CONST_JUNCTIONS_TO_MEASURE[j])].append(counter)
+
+				if(len(newVehIds)> 1):#Update the old list
+					self._oldIntersectionFlowVehIds[str(constants.CONST_JUNCTIONS_TO_MEASURE[j])][i] = newVehIds
+				elif(len(newVehIds) == 1):
+					self._oldIntersectionFlowVehIds[str(constants.CONST_JUNCTIONS_TO_MEASURE[j])][i] = newVehIds
+				else:
+					self._oldIntersectionFlowVehIds[str(constants.CONST_JUNCTIONS_TO_MEASURE[j])][i] = []
+
+
+	def OnExit(self):
+		#Does all of the initialising and saves the flow data
+
+		intersectionFlowRates = {}
+		#Loop through all of the junctions
+		for i in self._intersectionFlow:
+			#Loop through all of the intervals
+			localFlowRates = []
+			for x in range(0,len(self._intersectionFlow[i])):
+				localFlowRates.append(3600*self._intersectionFlow[i][x]/constants.CONST_MEASUREMENT_INTERVAL)
+			intersectionFlowRates[i] = localFlowRates
+
+		intersectionFlowRates['Time'] = range(0,len(intersectionFlowRates[i])*constants.CONST_MEASUREMENT_INTERVAL,constants.CONST_MEASUREMENT_INTERVAL)
+		df = DataFrame(intersectionFlowRates)
+
+		folderName = constants.CONST_EXPERIMENT_NAME
+		newFolderurl = os.path.abspath(os.path.join(os.getcwd(),os.pardir)) + '\\MyProgram\\Tests\\Experiments\\' + folderName
+		counter = 0
+		while os.path.exists(newFolderurl):
+			newFolderurl = os.path.abspath(os.path.join(os.getcwd(),os.pardir)) + '\\MyProgram\\Tests\\Experiments\\' + folderName + '_' + str(counter)
+			counter +=1
+
+		os.makedirs(newFolderurl)
+		df.to_excel(newFolderurl + '\\' + constants.CONST_FLOW_FILE_NAME, sheet_name='sheet1', index=False)
+
+
+		#Saves the settings file as well in the same folder
+		shutil.copyfile(self._configFile, newFolderurl  + '\\' + self._configFile.split("\\")[-1])
+
+
+
+class VehicleManager:
+	#The purpose of this class is to manage all of the vehicles in the system
+
+
+
+	#Class variables, default values
+	_vehicleList = [] #This is a list of Type 'MyVehicle'
+	platoonManager = PlatoonManager() #Manages the platoons
+	_laneList = []
+	_quit = False
+	#Properties
+	def GetVehicleList(self):
+		return self._vehicleList
+
+	def GetVehicleListIDs(self):
+		theList = []
+		for k in range(0,len(self._vehicleList)):
+			theList.append(self._vehicleList[k].GetID())
+		return theList
+
+	def Quit(self):
+		return self._quit
+
+	#Constructor
+	def __init__(self, basePath, nameOfCFGFile):
+		#Gets a list of all of the lanes in the network
+		self._laneList = traci.lane.getIDList()
+
+
 	def UpdateListActiveVehicles(self, listOfActiveVehicles):
 		#This takes in the active vehicles in SUMO and updates the lists in this class
 		_newVehiclesID = []
@@ -839,6 +966,7 @@ class VehicleManager:
 			vehID = self._vehicleList[k].GetID()
 
 			if vehID not in listOfActiveVehicles:#If it's no longer in the network
+
 				self.RemoveVehicle(vehID)#This changes the size of the vehicle list
 				myL = len(self._vehicleList)#Update loop
 			else:
@@ -866,10 +994,8 @@ class VehicleManager:
 
 	def Update(self, timeStep):
 		#Update each platoon
-		self.SetSimulationTimestep(timeStep)
 		self.platoonManager.Update()#Update the patoons
 		self.FormPlatoons()
-		self.UpdateFlowRateCounters()
 
 	def GetVehicleListFromIDs(self, listOfVehicleIds):
 		vehIDsList = self.GetVehicleListIDs()
@@ -879,7 +1005,6 @@ class VehicleManager:
 			localVehicleList.append(self._vehicleList[vehIDsList.index(listOfVehicleIds[k])])
 
 		return localVehicleList
-
 
 	def GetVehicleFromID(self, vehID):
 		return self._vehicleList[self.GetVehicleListIDs().index(vehID)]
@@ -893,44 +1018,14 @@ class VehicleManager:
 		return counter
 
 	def InitialiseOldIntersectionFlow(self):
-		edgeList = self._junctionDictionary[str(constants.CONST_MEASUREMENT_INTERVAL)]#Retrieves the edges connected to the junction
+		#Loops through all junction to measure
+		for j in range(0,len(constants.CONST_JUNCTIONS_TO_MEASURE)):
+			self._intersectionFlow[constants.CONST_JUNCTIONS_TO_MEASURE[j]] = []
+			self._oldIntersectionFlowVehIds[constants.CONST_JUNCTIONS_TO_MEASURE[j]] = []
+			edgeList = self._junctionDictionary[constants.CONST_JUNCTIONS_TO_MEASURE[j]]#Retrieves the edges connected to the junction
 
-		for i in range(0,len(edgeList)):
-			self._oldIntersectionFlowVehIds[str(constants.CONST_MEASUREMENT_INTERVAL)].append([])
-
-	def UpdateFlowRateCounters(self):
-		#Updates the number of vehicles going through
-
-		#Determines which index should the counter be stored in
-		index = int(math.floor(self.GetSimulationTimestep()/constants.CONST_MEASUREMENT_INTERVAL))
-
-		edgeList = self._junctionDictionary[str(constants.CONST_MEASUREMENT_INTERVAL)]#Retrieves the edges connected to the junction
-		
-		#Loop through all of the edges
-		for i in range(0,len(edgeList)):
-			counter = 0
-			newVehIds = traci.edge.getLastStepVehicleIDs(edgeList[i])
-			print self._oldIntersectionFlowVehIds[str(constants.CONST_MEASUREMENT_INTERVAL)]
-
-			for oldVeh in self._oldIntersectionFlowVehIds[str(constants.CONST_MEASUREMENT_INTERVAL)][i]:
-				print 
-				if oldVeh not in newVehIds and oldVeh != '':
-					counter +=1
-
-			if(index < len(self._intersectionFlow[str(constants.CONST_MEASUREMENT_INTERVAL)])):
-				self._intersectionFlow[str(constants.CONST_MEASUREMENT_INTERVAL)][index] += counter
-			else:
-				self._intersectionFlow[str(constants.CONST_MEASUREMENT_INTERVAL)].append(counter)
-
-			if(len(newVehIds)> 1):#Update the old list
-				self._oldIntersectionFlowVehIds[str(constants.CONST_MEASUREMENT_INTERVAL)][i] = newVehIds
-			elif(len(newVehIds) == 1):
-				self._oldIntersectionFlowVehIds[str(constants.CONST_MEASUREMENT_INTERVAL)][i] = newVehIds
-			else:
-				self._oldIntersectionFlowVehIds[str(constants.CONST_MEASUREMENT_INTERVAL)][i] = []
-
-
-		print self._intersectionFlow[str(constants.CONST_MEASUREMENT_INTERVAL)]
+			for i in range(0,len(edgeList)):
+				self._oldIntersectionFlowVehIds[constants.CONST_JUNCTIONS_TO_MEASURE[j]].append([])
 
 	def FormPlatoons(self):
 		#Loops through all of the id's of the lanes in the network
@@ -1032,10 +1127,6 @@ class VehicleManager:
 		
 		if(len(BR1) - ind1 < len(BR2) - ind2):#Loops through the first route starting from the index
 			for i in range(ind1,len(BR1)):
-				# print BR1
-				# print BR2
-				# print ind1
-				# print ind2
 				if(BR1[ind1]!=BR2[ind2]):
 					break;
 				else:
@@ -1091,6 +1182,7 @@ class MyVehicle:
 	_platoonID = None
 	_platoonPosition = 2
 	_state = None
+	_tau = 0
 
 	#Constructor
 	def __init__(self, vehicleID, state):
@@ -1099,17 +1191,25 @@ class MyVehicle:
 		self._state = state
 		
 		if (self._state == State.Connected):
-			traci.vehicle.setTau(self._id , constants.CONST_TAU_CONNECTED_NO_PLATOON)
+			self.SetTau(constants.CONST_TAU_CONNECTED_NO_PLATOON)
 		elif (self._state == State.Unconnected):
-			traci.vehicle.setTau(self._id , constants.CONST_TAU_UNCONNECTED)
+			self.SetTau(constants.CONST_TAU_UNCONNECTED)
 		else:
 			print 'Error'
 
 		self.UpdateColor()
+		#print str(self.GetTau())
 
 	#Properties
 	def GetState(self):
 		return self._state
+
+	def SetTau(self, newTau):
+		traci.vehicle.setTau(self._id, newTau)
+		self._tau = newTau#Update internal tau
+
+	def GetTau(self):
+		return traci.vehicle.getTau(self._id)
 
 	def GetID(self):
 		return self._id
@@ -1135,21 +1235,26 @@ class MyVehicle:
 	def Update(self):
 		#If it's the leader, it can change lanes more easily than the follower vehicles
 		if(self._platoonPosition == 0):
-
-			#print str(traci.vehicle.getSpeed(self.GetID()))
+			if(self._tau != constants.CONST_TAU_CONNECTED_NO_PLATOON):
+				self.SetTau(constants.CONST_TAU_CONNECTED_NO_PLATOON)
 			if(traci.vehicle.getSpeed(self.GetID())<constants.CONST_STOP_SPEED):
 				traci.vehicle.setLaneChangeMode(self._id,533)#341 allows speed changes#325 no speed changes
+				#traci.vehicle.setLaneChangeMode(self._id,512)#Remove after
 			else:
+				#traci.vehicle.setLaneChangeMode(self._id,512)#Remove after
 				traci.vehicle.setLaneChangeMode(self._id,517)
 		else:
 			traci.vehicle.setLaneChangeMode(self._id,512)
+			if(self._tau != constants.CONST_TAU_CONNECTED_PLATOON):
+				self.SetTau(constants.CONST_TAU_CONNECTED_PLATOON)
+
 
 	def AddToPlatoon(self, platoonID, platoonPosition):
 		self._platoonID = platoonID
 		self._platoonPosition = platoonPosition
 		self._inPlatoon = True
 		traci.vehicle.setLaneChangeMode(self._id,512)#341#321
-		traci.vehicle.setTau(self._id , constants.CONST_TAU_CONNECTED_PLATOON)
+		self.SetTau(constants.CONST_TAU_CONNECTED_PLATOON)
 		#traci.vehicle.setSpeedMode(self._id,31)
 		self.UpdateColor()
 
@@ -1158,10 +1263,10 @@ class MyVehicle:
 		self._platoonPosition = 2
 		self._inPlatoon = False
 		traci.vehicle.setLaneChangeMode(self._id,597)
-		traci.vehicle.setTau(self._id , constants.CONST_TAU_CONNECTED_NO_PLATOON)
+		#traci.vehicle.setLaneChangeMode(self._id,512)##remove after
+		self.SetTau(constants.CONST_TAU_CONNECTED_NO_PLATOON)
 		#traci.vehicle.setSpeedMode(self._id,31)
 		self.UpdateColor()
-
 	def UpdateColor(self):
 		if(self._inPlatoon):
 			if(self._platoonPosition == 0):
