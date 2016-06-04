@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 05/18/16 21:41:52 by SUMO netconvert Version 0.24.0
+<!-- generated on 06/04/16 10:24:29 by SUMO netconvert Version 0.24.0
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
@@ -239,18 +239,18 @@
         <phase duration="4" state="rryrrrrrrryrrrrr"/>
     </tlLogic>
     <tlLogic id="1" type="static" programID="test" offset="0">
-        <phase duration="10" state="GrrGrrgGrrrggrgg"/>
-        <phase duration="3" state="GrrGrryGrrrggryy"/>
-        <phase duration="1" state="GrrGrrrGrrrggrrr"/>
-        <phase duration="54" state="grrGGGrgrrrggGrr"/>
-        <phase duration="3" state="grrGyyrgrrrggyrr"/>
-        <phase duration="1" state="GrrGrrrGrrrggrrr"/>
-        <phase duration="10" state="GrgGrrrGrrgggrrr"/>
-        <phase duration="3" state="GryGrrrGrryggrrr"/>
-        <phase duration="1" state="GrrGrrrGrrrggrrr"/>
+        <phase duration="10" state="GrrGrrgGrrrgrrgg"/>
+        <phase duration="3" state="GrrGrryGrrrgrryy"/>
+        <phase duration="1" state="GrrGrrrGrrrgrrrr"/>
+        <phase duration="54" state="grrGGGrgrrrgGGrr"/>
+        <phase duration="3" state="grrGyyrgrrrgyyrr"/>
+        <phase duration="1" state="GrrGrrrGrrrgrrrr"/>
+        <phase duration="10" state="GrgGrrrGrrggrrrr"/>
+        <phase duration="3" state="GryGrrrGrryyrrrr"/>
+        <phase duration="1" state="GrrGrrrGrrrrrrrr"/>
         <phase duration="30" state="GGrGrrrGggrrrrrr"/>
-        <phase duration="3" state="GyrGrrrGyyrggrrr"/>
-        <phase duration="1" state="GrrGrrrGrrrggrrr"/>
+        <phase duration="3" state="GyrGrrrGyyrgrrrr"/>
+        <phase duration="1" state="GrrGrrrGrrrgrrrr"/>
     </tlLogic>
 
     <junction id="1" type="traffic_light" x="206.50" y="213.10" incLanes="4to1_0 4to1_1 4to1_2 15to1_0 15to1_1 15to1_2 15to1_3 17to1_0 17to1_1 17to1_2 17to1_3 14to1_0 14to1_1 14to1_2 14to1_3 14to1_4" intLanes=":1_0_0 :1_1_0 :1_16_0 :1_3_0 :1_4_0 :1_4_1 :1_17_0 :1_7_0 :1_8_0 :1_8_1 :1_18_0 :1_11_0 :1_11_1 :1_13_0 :1_19_0 :1_20_0" shape="196.63,230.54 216.33,230.57 217.78,229.43 221.71,213.51 219.54,191.77 199.84,191.88 198.43,192.89 190.89,214.61">

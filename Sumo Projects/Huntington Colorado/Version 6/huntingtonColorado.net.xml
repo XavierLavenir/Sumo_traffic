@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 04/28/16 23:25:26 by SUMO netconvert Version 0.24.0
+<!-- generated on 06/04/16 10:18:59 by SUMO netconvert Version 0.24.0
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
@@ -1678,8 +1678,8 @@
         <phase duration="3" state="GrrrrGrryGrrrrGrry"/>
         <phase duration="0.50" state="GrrrrGrrrGrrrrGrrr"/>
         <phase duration="40.50" state="GrrrrGggrGrrrrGggr"/>
-        <phase duration="4" state="GrrrrGyyrGrrrrGyyr"/>
-        <phase duration="0.50" state="GrrrrGrrrGrrrrGrrr"/>
+        <phase duration="4" state="GrrrrGyyrGrrrryyyr"/>
+        <phase duration="0.50" state="GrrrrGrrrGrrrrrrrr"/>
         <phase duration="12.50" state="GrrggGrrrGrrggrrrr"/>
         <phase duration="3" state="GrryyGrrrGrryyrrrr"/>
         <phase duration="0.50" state="GrrrrGrrrGrrrrrrrr"/>

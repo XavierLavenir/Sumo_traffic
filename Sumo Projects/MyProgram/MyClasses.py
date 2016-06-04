@@ -469,22 +469,6 @@ class Platoon:
 			Ro2 = traci.vehicle.getRoute(vid2)
 			ind1 = traci.vehicle.getRouteIndex(vid1)
 			ind2 = traci.vehicle.getRouteIndex(vid2)
-	
-
-			# if (vid1 == 'type0.7'):
-			# 	print vid1 + ' ' + str(traci.vehicle.getRoadID(vid1))
-
-			# if (vid1 == 'type0.8'):
-			# 	print vid1 + ' ' + str(traci.vehicle.getRoadID(vid1))
-
-			# if (vid1 == 'type0.9'):
-			# 	print vid1 + ' ' + str(traci.vehicle.getRoadID(vid1))
-
-			# if (vid1 == 'type0.6'):
-			# 	print vid1 + ' ' + str(traci.vehicle.getRoadID(vid1))
-
-			#print self.GetNumberOfLanes(':6_0')
-			#self._vehicleList[i-1].GetID()
 			
 			case = -1
 			if(RJ1 not in self._edgeList and RJ2 not in self._edgeList):#Both at junction
@@ -513,7 +497,6 @@ class Platoon:
 					if(L1 != L2):#May need to add an update here so that if the leader is on a different lane, then it leaves the platoon
 						self.Remove(self._vehicleList[0])
 						break
-						#traci.vehicle.changeLane(self._vehicleList[i].GetID(), L1, constants.CONST_LANE_CHANGE_DURATION)
 					else:#This forces the vehicle to be on the same lane as the leader (or sumo overides this)
 						traci.vehicle.changeLane(self._vehicleList[i].GetID(), L1, constants.CONST_LANE_CHANGE_DURATION)
 				else:#Not on the same edge
@@ -561,18 +544,11 @@ class Platoon:
 										break
 
 								j1+=1
-						#else:
-							#print 'VEHICLE IS TOO FAR TO CHECK IF LANES CONNECT'
-							#print vid1 +' and ' + vid2
+
 
 					if(connected):
 						traci.vehicle.changeLane(self._vehicleList[i].GetID(), locLaneList[j1], constants.CONST_LANE_CHANGE_DURATION)
-					else:
-						print 'NOT CONNECTED FOR ONCE -- CHECK IT OUT'
-			# if (vid2 == 'type0.8'):
-			# 	print vid2 + ' ' + str(traci.vehicle.getRoadID(vid1)) + ' - case:' + str(case)
-			# 	if(case == 2):
-			# 		traci.vehicle.changeLane(self._vehicleList[i].GetID(), traci.vehicle.getLaneIndex(self._vehicleList[i-1].GetID()), constants.CONST_LANE_CHANGE_DURATION)
+
 
 	def ShouldVehicleJoin(self, vehID):
 		#This checks if the vehicle should join the platoon
@@ -1198,7 +1174,6 @@ class MyVehicle:
 			print 'Error'
 
 		self.UpdateColor()
-		#print str(self.GetTau())
 
 	#Properties
 	def GetState(self):
@@ -1238,10 +1213,8 @@ class MyVehicle:
 			if(self._tau != constants.CONST_TAU_CONNECTED_NO_PLATOON):
 				self.SetTau(constants.CONST_TAU_CONNECTED_NO_PLATOON)
 			if(traci.vehicle.getSpeed(self.GetID())<constants.CONST_STOP_SPEED):
-				traci.vehicle.setLaneChangeMode(self._id,533)#341 allows speed changes#325 no speed changes
-				#traci.vehicle.setLaneChangeMode(self._id,512)#Remove after
+				traci.vehicle.setLaneChangeMode(self._id,533)
 			else:
-				#traci.vehicle.setLaneChangeMode(self._id,512)#Remove after
 				traci.vehicle.setLaneChangeMode(self._id,517)
 		else:
 			traci.vehicle.setLaneChangeMode(self._id,512)
@@ -1253,9 +1226,8 @@ class MyVehicle:
 		self._platoonID = platoonID
 		self._platoonPosition = platoonPosition
 		self._inPlatoon = True
-		traci.vehicle.setLaneChangeMode(self._id,512)#341#321
+		traci.vehicle.setLaneChangeMode(self._id,512)
 		self.SetTau(constants.CONST_TAU_CONNECTED_PLATOON)
-		#traci.vehicle.setSpeedMode(self._id,31)
 		self.UpdateColor()
 
 	def RemoveFromPlatoon(self):
@@ -1263,9 +1235,7 @@ class MyVehicle:
 		self._platoonPosition = 2
 		self._inPlatoon = False
 		traci.vehicle.setLaneChangeMode(self._id,597)
-		#traci.vehicle.setLaneChangeMode(self._id,512)##remove after
 		self.SetTau(constants.CONST_TAU_CONNECTED_NO_PLATOON)
-		#traci.vehicle.setSpeedMode(self._id,31)
 		self.UpdateColor()
 	def UpdateColor(self):
 		if(self._inPlatoon):

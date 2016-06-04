@@ -30,12 +30,7 @@ def run():
     traci.init(PORT)
     step = 0
     programManager = MyClasses.ProgramManager(myP + constants.CONST_CURR_MAP.rsplit('\\',1)[0] + '\\' , constants.CONST_CURR_MAP.rsplit('\\',1)[1], configFile)
-    # print '2to14_2: ' + str(traci.lane.getLength('2to14_2'))
-    # print '14to1_2: ' + str(traci.lane.getLength('14to1_2'))
-    # print ':1_13_0: ' + str(traci.lane.getLength(':1_13_0')) 
-    # print '1to15_0: ' + str(traci.lane.getLength('1to15_0'))
-    # print '15to6_0: ' + str(traci.lane.getLength('15to6_0'))
-    # print '6to7_0: ' + str(traci.lane.getLength('6to7_0'))
+
 
     #This loops through all of the simulaton steps as defined by the configuartion file
     while traci.simulation.getMinExpectedNumber() > 0:
@@ -46,12 +41,8 @@ def run():
         if(constants.CONST_FLOW_CUT_OFF and step > constants.CONST_FLOW_SIMULATION_TIME):
             break
 
-        if('type0.54' not in traci.vehicle.getIDList() and step > 400):
-            shutil.copyfile('C:\\Users\\Xavier\\Dropbox\\Courses\\Fall\\ME 199 - Final Year Project\\Sumo Projects\\MyProgram\\tripinfo.xml', 'C:\\Users\\Xavier\\Dropbox\\Courses\\Fall\\ME 199 - Final Year Project\\Sumo Projects\\MyProgram\\tripinfo_' +constants.CONST_EXPERIMENT_NAME+'.xml')
-            break
-    #programManager.OnExit()#tells the software that the program is about to end
+    programManager.OnExit()
     traci.close()
-    shutil.copyfile('C:\\Users\\Xavier\\Dropbox\\Courses\\Fall\\ME 199 - Final Year Project\\Sumo Projects\\MyProgram\\tripinfo.xml', 'C:\\Users\\Xavier\\Dropbox\\Courses\\Fall\\ME 199 - Final Year Project\\Sumo Projects\\MyProgram\\tripinfo_' +constants.CONST_EXPERIMENT_NAME+'.xml')
     sys.stdout.flush()
 
 def get_options():

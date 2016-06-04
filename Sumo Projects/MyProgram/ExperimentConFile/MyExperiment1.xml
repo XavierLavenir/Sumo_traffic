@@ -2,7 +2,7 @@
 
 <Settings>
 	<CONST_EXPERIMENT_NAME>MyTest1</CONST_EXPERIMENT_NAME>
-	<CONST_CURR_MAP>\\Huntington Colorado\\Version 6\\0.2\\huntingtonColorado.sumo.cfg</CONST_CURR_MAP>
+	<CONST_CURR_MAP>\\Huntington Colorado\\Version 6\\huntingtonColorado.sumo.cfg</CONST_CURR_MAP>
 	<CONST_MAXSIZE>4</CONST_MAXSIZE>
 	<CONST_MINSIZE>2</CONST_MINSIZE>
 	<CONST_STOP_SPEED>2</CONST_STOP_SPEED>
